@@ -1,0 +1,94 @@
+package com.javalec.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import com.javalec.dto.productListDto;
+import com.javalec.util.DBConnect;
+
+public class productListDao {
+
+	String productid;
+	String pbrand;
+	int pprice;
+	String custid;
+	int osale;
+	String odate;
+	int ocount;
+
+	public productListDao() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// 검색 결과를 Table
+	public ArrayList<productListDto> selectList() {
+
+		ArrayList<productListDto> dtoList = new ArrayList<productListDto>();
+
+		String whereStatement = "select productid, pbrand, pprice from product";
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn_mysql = DriverManager.getConnection(DBConnect.url_mysql, DBConnect.id_mysql,
+					DBConnect.pw_mysql);
+			Statement stmt_mysql = conn_mysql.createStatement();
+
+			ResultSet rs = stmt_mysql.executeQuery(whereStatement);
+
+			while (rs.next()) {
+				String wkPid = rs.getString(1);
+				String skPbrand = rs.getString(2);
+				int wkPprice = rs.getInt(3);
+
+				productListDto productListDto = new productListDto(wkPid, skPbrand, wkPprice);
+				dtoList.add(productListDto);
+			}
+
+			conn_mysql.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return dtoList;
+
+	}
+
+	public ArrayList<productListDto> conditionList() {
+
+		ArrayList<productListDto> dtoList = new ArrayList<productListDto>();
+
+		String whereStatement = "select productid, pbrand, pprice from product ";
+		String whereStatement2 = "where " + conname + " like '%" + condata + "%'";
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn_mysql = DriverManager.getConnection(DBConnect.url_mysql, DBConnect.id_mysql,
+					DBConnect.pw_mysql);
+			Statement stmt_mysql = conn_mysql.createStatement();
+
+			ResultSet rs = stmt_mysql.executeQuery(whereStatement + whereStatement2);
+
+			while (rs.next()) {
+				String wkPid = rs.getString(1);
+				String skPbrand = rs.getString(2);
+				int wkPprice = rs.getInt(3);
+
+				productListDto dto = new productListDto();
+				dtoList.add(dto);
+			}
+
+			conn_mysql.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return dtoList;
+
+	}
+
+}
