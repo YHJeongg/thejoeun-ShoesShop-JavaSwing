@@ -1,0 +1,22 @@
+package com.javalec.util;
+
+import com.javalec.base.Login;
+
+public class LoginCustId {
+	
+	public static String custid;
+	
+	public LoginCustId() {
+	
+	}
+
+	public String getCustid() {
+		return custid;
+	}
+
+	public void setCustid(String custid) {
+		LoginCustId.custid = custid;
+	}
+	
+	
+}
