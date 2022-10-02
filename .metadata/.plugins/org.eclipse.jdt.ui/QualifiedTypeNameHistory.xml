@@ -9,4 +9,6 @@
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="com.javalec.dao.productListDao"/>
     <fullyQualifiedTypeName name="com.javalec.dto.productListDto"/>
+    <fullyQualifiedTypeName name="com.javalec.base.Login"/>
+    <fullyQualifiedTypeName name="com.javalec.util.LoginCustId"/>
 </qualifiedTypeNameHistroy>
