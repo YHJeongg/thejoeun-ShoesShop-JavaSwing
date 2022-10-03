@@ -1,0 +1,60 @@
+package com.javalec.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import com.javalec.dto.MypageDto;
+import com.javalec.dto.productListDto;
+import com.javalec.util.DBConnect;
+
+public class MypageDao {
+
+	String custid;
+	String cpassword;
+	String cname;
+	String cinitdate;
+	String cupdatedate;
+	String cdeletedate;
+
+	public MypageDao() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public MypageDao(String custid, String cpassword) {
+		super();
+		this.custid = custid;
+		this.cpassword = cpassword;
+	}
+
+	public Boolean updateAction() {
+
+		PreparedStatement ps = null;
+		try { 
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn_mysql = DriverManager.getConnection(DBConnect.url_mysql, DBConnect.id_mysql, DBConnect.pw_mysql); // database에 접근을 하겠다. (선언자, 아직 실행 단계 x)
+			String query = "update customer set cpassword = ?, cupdatedate = now() ";
+			String query2 = "where customer_id = ? ";
+
+			ps = conn_mysql.prepareStatement(query + query2);
+			ps.setString(1, cpassword);
+			ps.setString(2, custid); 
+			ps.executeUpdate();
+
+			conn_mysql.close();
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+
+	}
+
+}

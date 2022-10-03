@@ -10,8 +10,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import com.javalec.dto.LoginDto;
 import com.javalec.util.DBConnect;
+import com.javalec.util.LoginCustId;
 
 public class LoginDao {
 
@@ -39,6 +42,10 @@ public class LoginDao {
 		this.custid = custid;
 		this.cpassword = cpassword;
 		this.cname = cname;
+	}
+	public LoginDao(String custid) {
+		super();
+		this.custid = custid;
 	}
 
 	// 회원가입 등록
@@ -71,7 +78,7 @@ public class LoginDao {
 		return true;
 	}
 
-	public ArrayList<LoginDto> loginAction() {
+	public ArrayList<LoginDto> loginAction(String custid) {
 
 		ArrayList<LoginDto> dtoList = new ArrayList<LoginDto>();
 
@@ -83,7 +90,7 @@ public class LoginDao {
 			Statement stmt_mysql = conn_mysql.createStatement();
 			// 불러올 때 java.sql을 불러와야함.
 
-			String query = "select custid, cpassword from customer";
+			String query = "select custid, cpassword from customer where custid = " + "'" + custid + "'" + " and cdeletedate IS NULL";
 
 			ResultSet rs = stmt_mysql.executeQuery(query);
 
@@ -138,5 +145,5 @@ public class LoginDao {
 		}
 		return dtoList;
 	}
-
+	
 }// End

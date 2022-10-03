@@ -1,0 +1,31 @@
+package com.javalec.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
+import com.javalec.dto.MypageDto;
+import com.javalec.util.DBConnect;
+
+public class MypageDao {
+
+	int custNum;
+	String cpassword;
+	String cname;
+	String cinitdate;
+	String cupdatedate;
+	String cdeletedate;
+	String custid;
+
+	public MypageDao() {
+		// TODO Auto-generated constructor stub
+	}
+
+	
+
+}

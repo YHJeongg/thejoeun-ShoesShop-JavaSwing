@@ -14,7 +14,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import com.javalec.dao.LoginDao;
+import com.javalec.dao.MypageDao;
 import com.javalec.dto.LoginDto;
+import com.javalec.util.LoginCustId;
 
 public class Login {
 
@@ -74,6 +76,7 @@ public class Login {
 		}
 		return lblNewLabel;
 	}
+
 	private JTextField getTfCustid() {
 		if (tfCustid == null) {
 			tfCustid = new JTextField();
@@ -82,6 +85,7 @@ public class Login {
 		}
 		return tfCustid;
 	}
+
 	private JLabel getLblNewLabel_1() {
 		if (lblNewLabel_1 == null) {
 			lblNewLabel_1 = new JLabel("비밀번호 :");
@@ -90,6 +94,7 @@ public class Login {
 		}
 		return lblNewLabel_1;
 	}
+
 	private JButton getBtnLogin() {
 		if (btnLogin == null) {
 			btnLogin = new JButton("로그인");
@@ -102,22 +107,23 @@ public class Login {
 		}
 		return btnLogin;
 	}
+
 	private JButton getBtnSignup() {
 		if (btnSignup == null) {
 			btnSignup = new JButton("회원가입");
 			btnSignup.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+
 					Signup.main(null);
 					frame.setVisible(false);
-					
-					
+
 				}
 			});
 			btnSignup.setBounds(200, 300, 160, 45);
 		}
 		return btnSignup;
 	}
+
 	private JPasswordField getPfCpassword() {
 		if (pfCpassword == null) {
 			pfCpassword = new JPasswordField();
@@ -125,35 +131,32 @@ public class Login {
 		}
 		return pfCpassword;
 	}
-	
-	
-	private void loginAction(){
+
+	private void loginAction() {
 		LoginDao logindao = new LoginDao();
-		ArrayList<LoginDto> dtoList = logindao.loginAction();
+		ArrayList<LoginDto> dtoList = logindao.loginAction(tfCustid.getText());
 		String id = tfCustid.getText();
-		String password= pfCpassword.getText();
+		String password = pfCpassword.getText();
 		int confirm = 0;
-		
-		
-		for(int index = 0; index<dtoList.size(); index++) {
-			if(dtoList.get(index).getCustid().equals(id)&&
-					dtoList.get(index).getCpassword().equals(password)) {
-				
-				JOptionPane.showMessageDialog(null,"로그인하였습니다.");
+
+		for (int index = 0; index < dtoList.size(); index++) {
+			if (dtoList.get(index).getCustid().equals(id) && dtoList.get(index).getCpassword().equals(password)) {
+
+				JOptionPane.showMessageDialog(null, "로그인하였습니다.");
+				LoginCustId.setCustid(tfCustid.getText());
+				productList.main(null);
+				frame.setVisible(false);
 				break;
-			}
+			} 
 			confirm += 1;
-					
+
 		}
-		if(confirm == dtoList.size()) {
-			JOptionPane.showMessageDialog(null,"잘못 입력했습니다. 다시 로그인해주세요");
+		if (confirm == dtoList.size()) {
+			JOptionPane.showMessageDialog(null, "잘못 입력했거나 탈퇴한 회원입니다. 다시 로그인해주세요");
 			tfCustid.setText("");
 			pfCpassword.setText("");
 		}
-		
+
 	}
-	
-	
-	
-	
-}//End
+
+}// End

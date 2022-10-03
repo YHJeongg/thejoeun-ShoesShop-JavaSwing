@@ -1,5 +1,3 @@
 INDEX VERSION 1.131+/Users/jyh/Desktop/ShoesProject/.metadata/.plugins/org.eclipse.jdt.core
-82221395.index
-2912218328.index
 1865797976.index
 2745496300.index

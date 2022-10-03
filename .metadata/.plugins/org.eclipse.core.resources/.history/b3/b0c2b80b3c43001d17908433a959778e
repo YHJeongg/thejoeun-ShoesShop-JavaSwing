@@ -1,0 +1,175 @@
+package com.javalec.base;
+
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import com.javalec.dao.LoginDao;
+import com.javalec.dao.MypageDao;
+import com.javalec.dto.LoginDto;
+import com.javalec.util.LoginCustId;
+
+public class Login {
+
+	private JFrame frame;
+	private JLabel lblNewLabel;
+	private JTextField tfCustid;
+	private JLabel lblNewLabel_1;
+	private JButton btnLogin;
+	private JButton btnSignup;
+	private JPasswordField pfCpassword;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Login window = new Login();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Login() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setTitle("로그인");
+		frame.setBounds(100, 100, 639, 442);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		frame.getContentPane().add(getLblNewLabel());
+		frame.getContentPane().add(getTfCustid());
+		frame.getContentPane().add(getLblNewLabel_1());
+		frame.getContentPane().add(getBtnLogin());
+		frame.getContentPane().add(getBtnSignup());
+		frame.getContentPane().add(getPfCpassword());
+	}
+
+	private JLabel getLblNewLabel() {
+		if (lblNewLabel == null) {
+			lblNewLabel = new JLabel("ID :");
+			lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+			lblNewLabel.setBounds(60, 47, 77, 35);
+		}
+		return lblNewLabel;
+	}
+
+	private JTextField getTfCustid() {
+		if (tfCustid == null) {
+			tfCustid = new JTextField();
+			tfCustid.setBounds(200, 47, 261, 35);
+			tfCustid.setColumns(10);
+		}
+		return tfCustid;
+	}
+
+	private JLabel getLblNewLabel_1() {
+		if (lblNewLabel_1 == null) {
+			lblNewLabel_1 = new JLabel("비밀번호 :");
+			lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+			lblNewLabel_1.setBounds(60, 122, 77, 35);
+		}
+		return lblNewLabel_1;
+	}
+
+	private JButton getBtnLogin() {
+		if (btnLogin == null) {
+			btnLogin = new JButton("로그인");
+			btnLogin.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					loginCheck();
+				}
+			});
+			btnLogin.setBounds(399, 300, 160, 45);
+		}
+		return btnLogin;
+	}
+
+	private JButton getBtnSignup() {
+		if (btnSignup == null) {
+			btnSignup = new JButton("회원가입");
+			btnSignup.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+					Signup.main(null);
+					frame.setVisible(false);
+
+				}
+			});
+			btnSignup.setBounds(200, 300, 160, 45);
+		}
+		return btnSignup;
+	}
+
+	private JPasswordField getPfCpassword() {
+		if (pfCpassword == null) {
+			pfCpassword = new JPasswordField();
+			pfCpassword.setBounds(200, 129, 261, 35);
+		}
+		return pfCpassword;
+	}
+
+	private void loginAction() {
+		LoginDao logindao = new LoginDao();
+		ArrayList<LoginDto> dtoList = logindao.loginAction();
+		String id = tfCustid.getText();
+		String password = pfCpassword.getText();
+		int confirm = 0;
+		Boolean ok = logindao.loginCheck();
+
+		for (int index = 0; index < dtoList.size(); index++) {
+			if (dtoList.get(index).getCustid().equals(id) && dtoList.get(index).getCpassword().equals(password)) {
+
+				JOptionPane.showMessageDialog(null, "로그인하였습니다.");
+				LoginCustId.setCustid(tfCustid.getText());
+				productList.main(null);
+				frame.setVisible(false);
+				break;
+			} 
+			confirm += 1;
+
+		}
+		if (confirm == dtoList.size()) {
+			JOptionPane.showMessageDialog(null, "잘못 입력했습니다. 다시 로그인해주세요");
+			tfCustid.setText("");
+			pfCpassword.setText("");
+		}
+
+	}
+
+	private void loginCheck() {
+
+		LoginDao dao = new LoginDao();
+		Boolean ok = dao.loginCheck();
+
+		if (ok) {
+			JOptionPane.showMessageDialog(null, "탈퇴한 회원입니다.");
+		} else {
+			loginAction();
+		}
+	}
+
+}// End
