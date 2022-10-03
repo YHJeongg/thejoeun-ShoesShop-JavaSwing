@@ -254,6 +254,8 @@ public class productList {
 			btnMyPage = new JButton("마이페이지");
 			btnMyPage.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					Mypage.main(null);
+					frmShoesShop.setVisible(false);
 				}
 			});
 			btnMyPage.setBounds(45, 375, 117, 29);

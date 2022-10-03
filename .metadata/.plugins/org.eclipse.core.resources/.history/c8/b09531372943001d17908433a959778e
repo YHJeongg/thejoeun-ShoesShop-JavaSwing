@@ -1,0 +1,45 @@
+package com.javalec.dto;
+
+public class MypageDto {
+	// fields
+	String cpassword;
+	String cname;
+	String custid;
+
+	public MypageDto() {
+
+	}
+
+//사용하고 자하는 사이즈들을 지정해줌 
+
+	public MypageDto(String cname) {
+		super();
+		this.cname = cname;
+	}
+
+	public String getCpassword() {
+		return cpassword;
+	}
+
+	public void setCpassword(String cpassword) {
+		this.cpassword = cpassword;
+	}
+
+	public String getCname() {
+		return cname;
+	}
+
+	public void setCname(String cname) {
+		this.cname = cname;
+	}
+
+
+	public String getCustid() {
+		return custid;
+	}
+
+	public void setCustid(String custid) {
+		this.custid = custid;
+	}
+
+}
