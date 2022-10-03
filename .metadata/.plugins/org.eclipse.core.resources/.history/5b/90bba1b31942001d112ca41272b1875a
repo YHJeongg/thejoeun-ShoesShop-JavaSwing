@@ -1,0 +1,12 @@
+package com.javalec.util;
+
+public class LoginCustId {
+	
+	String custid;
+	
+	public LoginCustId() {
+	
+	}
+	
+	
+}
